@@ -1,0 +1,51 @@
+- name: Create User
+  user:
+    name: gogs
+    home: /data/wwwroot/gogs
+    create_home: no
+    shell: /usr/bin/false
+
+- name: Create Directory
+  file:
+    path: /data/wwwroot/
+    state: directory
+
+
+- name: Download gogs
+  unarchive:
+    src: https://dl.gogs.io/{{gogs_ver}}/gogs_{{gogs_ver}}_linux_amd64.zip
+    dest: /data/wwwroot/
+    remote_src: yes
+    owner: gogs
+    group: gogs
+
+- name: Create Repos Dir
+  file:
+    path: /data/wwwroot/gogs/repos
+    state: directory
+    owner: gogs
+    group: gogs
+  
+
+- name: Set Gogs service
+  copy:
+    src: gogs.service
+    dest: /etc/systemd/system/
+
+
+- name: Start Gogs
+  service:
+    name: gogs
+    state: restarted
+    enabled: yes
+
+- name: Set Reverse proxy
+  copy:
+    src: gogs.conf
+    dest: /etc/nginx/conf.d/gogs.conf
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
