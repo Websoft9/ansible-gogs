@@ -10,6 +10,7 @@
     path: /data/wwwroot/
     state: directory
 
+
 - name: Download gogs
   unarchive:
     src: https://dl.gogs.io/{{gogs_ver}}/gogs_{{gogs_ver}}_linux_amd64.zip
@@ -24,11 +25,13 @@
     state: directory
     owner: gogs
     group: gogs
+  
 
 - name: Set Gogs service
   copy:
     src: gogs.service
     dest: /etc/systemd/system/
+
 
 - name: Start Gogs
   service:
