@@ -12,7 +12,6 @@
     - { role: role_nginx , tags: "role_nginx"}
     - { role: role_mysql , tags: "mysql"}
     - { role: role_docker , tags: "role_docker"}
-    - { role: role_docker_phpmyadmin , tags: "role_docker_phpmyadmin"}
     - { role: gogs , tags: "gogs"}
 
 
